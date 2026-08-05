@@ -24,7 +24,7 @@ create_tables()
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:8080", "http://127.0.0.1:8080"])
+CORS(app, origins=["http://localhost:8080", "http://127.0.0.1:8080", "https://civic-complaint-priority-management.vercel.app/"])
 
 # No ML models needed - using Groq only
 print("🚀 Using Groq LLM for classification (no ML models required)")
