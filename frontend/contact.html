@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact — Civic Complaint System</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
+    <script src="geo.js"></script>
+    <style>
+        /* ── Page Reset for Contact ── */
+        body { background: #F0F4F8; }
+
+        .contact-wrapper {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1200px;
+            margin: 60px auto;
+            width: 92%;
+            gap: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+
+        /* ── Left Panel ── */
+        .contact-left {
+            background: #1E3A8A;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-left::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            top: -100px;
+            right: -100px;
+        }
+
+        .contact-left::after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            bottom: -60px;
+            left: -60px;
+        }
+
+        .contact-left-top { position: relative; z-index: 1; }
+
+        .contact-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            color: #93C5FD;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78em;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+
+        .contact-left h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .contact-left h1 span {
+            color: #93C5FD;
+        }
+
+        .contact-left p {
+            font-family: 'DM Sans', sans-serif;
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        /* ── Contact Info Cards ── */
+        .contact-info { 
+            position: relative; 
+            z-index: 1;
+            margin-top: 48px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease both;
+        }
+
+        .info-item:nth-child(1) { animation-delay: 0.1s; }
+        .info-item:nth-child(2) { animation-delay: 0.2s; }
+        .info-item:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .info-item:hover .info-icon {
+            background: rgba(255,255,255,0.22);
+        }
+
+        .info-text strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.82em;
+            font-weight: 700;
+            color: #93C5FD;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .info-text span {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95em;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* ── Social Links ── */
+        .contact-social {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.95em;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        /* ── Right Panel (Form) ── */
+        .contact-right {
+            background: #fff;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-right h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .contact-right .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            color: #6B7280;
+            font-size: 0.95em;
+            margin-bottom: 36px;
+        }
+
+        /* ── Form Styles ── */
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+        .form-row-double {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.82em;
+            font-weight: 700;
+            color: #374151;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95em;
+            color: #111827;
+            background: #F9FAFB;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 0;
+            transition: all 0.2s;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #1E3A8A;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30,58,138,0.08);
+            transform: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #9CA3AF;
+        }
+
+        .form-group textarea { resize: vertical; min-height: 130px; }
+
+        /* ── Topic Select ── */
+        .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+        /* ── Submit Button ── */
+        .btn-contact {
+            background: #1E3A8A;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 32px;
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-contact:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(30,58,138,0.3);
+        }
+
+        .btn-contact:active { transform: translateY(0); }
+
+        .btn-contact .arrow {
+            transition: transform 0.2s;
+            font-size: 1.1em;
+        }
+
+        .btn-contact:hover .arrow { transform: translateX(4px); }
+
+        /* ── Success Message ── */
+        .success-msg {
+            display: none;
+            background: #ECFDF5;
+            border: 1.5px solid #6EE7B7;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-family: 'DM Sans', sans-serif;
+            color: #065F46;
+            font-size: 0.95em;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .success-msg.show { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                margin: 20px auto;
+            }
+            .contact-left { padding: 40px 30px; }
+            .contact-right { padding: 40px 30px; }
+            .form-row-double { grid-template-columns: 1fr; }
+            .contact-left h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-row">
+        <a href="index.html" class="brand">Civic Complaint System</a>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+        </nav>
+    </div>
+</header>
+
+<div class="contact-wrapper">
+
+    <!-- ── Left Panel ── -->
+    <div class="contact-left">
+        <div class="contact-left-top">
+            <div class="contact-tag">Get in Touch</div>
+            <h1>We're here to <span>help you</span> be heard.</h1>
+            <p>Have a question, feedback, or need help with a complaint? Reach out and our team will get back to you within 24 hours.</p>
+        </div>
+
+        <div class="contact-info">
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div class="info-text">
+                    <strong>Office</strong>
+                    <span>City Hall, Municipal District</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">✉️</div>
+                <div class="info-text">
+                    <strong>Email</strong>
+                    <span>support@civic.gov</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🕐</div>
+                <div class="info-text">
+                    <strong>Response Time</strong>
+                    <span>Within 24 business hours</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-social">
+            <a href="#" class="social-btn" title="Twitter">𝕏</a>
+            <a href="#" class="social-btn" title="Facebook">f</a>
+            <a href="#" class="social-btn" title="LinkedIn">in</a>
+        </div>
+    </div>
+
+    <!-- ── Right Panel ── -->
+    <div class="contact-right">
+        <h2>Send us a message</h2>
+        <p class="subtitle">Fill in the form below and we'll respond as soon as possible.</p>
+
+        <form class="contact-form" id="contactForm">
+            <div class="form-row-double">
+                <div class="form-group">
+                    <label for="contact-name">Full Name</label>
+                    <input id="contact-name" type="text" placeholder="John Doe" required />
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email Address</label>
+                    <input id="contact-email" type="email" placeholder="you@example.com" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-topic">Topic</label>
+                <select id="contact-topic">
+                    <option value="">Select a topic…</option>
+                    <option>General Inquiry</option>
+                    <option>Complaint Status</option>
+                    <option>Technical Support</option>
+                    <option>Feedback & Suggestions</option>
+                    <option>Report an Issue</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" placeholder="Describe your question or feedback in detail…" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-contact">
+                Send Message <span class="arrow">→</span>
+            </button>
+
+            <div class="success-msg" id="successMsg">
+                ✅ Your message has been sent! We'll get back to you shortly.
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('.btn-contact');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        setTimeout(() => {
+            document.getElementById('successMsg').classList.add('show');
+            btn.textContent = 'Message Sent ✓';
+            btn.style.background = '#059669';
+            this.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+        }, 800);
+    });
+</script>
+</body>
+</html>

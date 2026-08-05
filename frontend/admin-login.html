@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+    <script src="geo.js"></script>
+    <style>
+  .form-card { background: #60A5FA !important; }
+  .form-card h2, .form-card label { color: #1E3A8A !important; }
+  .form-card input, .form-card textarea { background: #EFF6FF !important; color: #1E3A8A !important; border-color: #1E3A8A !important; }
+  .form-card input::placeholder, .form-card textarea::placeholder { color: #6B7280 !important; }
+  .form-card .btn-outline { background: #1E3A8A !important; color: #fff !important; border-color: #1E3A8A !important; }
+  .form-card a { color: #fff !important; }
+</style>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-row">
+        <a href="index.html" class="brand">Civic Complaint System</a>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container form-page">
+    <div class="card form-card">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm">
+            <label>
+                Username
+                <input id="admin-user" type="text" required />
+            </label>
+            <label>
+                Password
+                <input id="admin-pass" type="password" required />
+            </label>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

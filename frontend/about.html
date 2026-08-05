@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Civic Complaint System</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="geo.js"></script>
+  <script src="app.js" defer></script>
+  <style>
+    body { background: #F0F4F8; }
+
+    /* ── HERO BANNER ── */
+    .about-hero {
+      background: linear-gradient(135deg, #1E3A8A 0%, #1e4db5 100%);
+      padding: 80px 0 90px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      top: -150px; right: -100px;
+    }
+
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      bottom: -80px; left: 80px;
+    }
+
+    .about-hero-inner {
+      width: 90%; max-width: 1100px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+
+    .about-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #93C5FD;
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .about-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem; font-weight: 800;
+      color: #fff; line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .about-hero h1 span { color: #93C5FD; }
+
+    .about-hero p {
+      font-family: 'DM Sans', sans-serif;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem; line-height: 1.75;
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* ── WHAT IS IT ── */
+    .about-what {
+      width: 90%; max-width: 1100px;
+      margin: 70px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
+    }
+
+    .about-what-text .section-tag {
+      display: inline-block;
+      background: #EFF6FF; color: #1E3A8A;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .about-what-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: #111827; line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .about-what-text p {
+      font-family: 'DM Sans', sans-serif;
+      color: #6B7280; font-size: 0.97rem;
+      line-height: 1.75; margin-bottom: 14px;
+    }
+
+    .about-what-cards {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .mini-card {
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: all 0.25s;
+    }
+
+    .mini-card:hover {
+      transform: translateX(6px);
+      border-color: #BFDBFE;
+      box-shadow: 0 4px 16px rgba(30,58,138,0.08);
+    }
+
+    .mini-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: #EFF6FF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1em; flex-shrink: 0;
+    }
+
+    .mini-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      color: #111827; margin-bottom: 4px;
+    }
+
+    .mini-card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; color: #6B7280;
+      line-height: 1.5; margin: 0;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-section {
+      background: #fff;
+      padding: 80px 0;
+    }
+
+    .tech-inner {
+      width: 90%; max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center; margin-bottom: 50px;
+    }
+
+    .section-header .section-tag {
+      display: inline-block;
+      background: #EFF6FF; color: #1E3A8A;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: #111827;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tech-card {
+      background: #F8FAFC;
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+
+    .tech-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1E3A8A, #3B82F6);
+      opacity: 0; transition: opacity 0.25s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+      border-color: #BFDBFE;
+    }
+
+    .tech-card:hover::before { opacity: 1; }
+
+    .tech-emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
+
+    .tech-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: #111827; margin-bottom: 8px;
+    }
+
+    .tech-card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; color: #6B7280;
+      line-height: 1.6;
+    }
+
+    /* ── DEPARTMENTS ── */
+    .dept-section {
+      width: 90%; max-width: 1100px;
+      margin: 70px auto;
+    }
+
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-top: 40px;
+    }
+
+    .dept-pill {
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; color: #374151;
+      display: flex; align-items: center; gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .dept-pill:hover {
+      border-color: #93C5FD;
+      background: #EFF6FF;
+      color: #1E3A8A;
+    }
+
+    .dept-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #3B82F6; flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    .about-cta {
+      background: linear-gradient(135deg, #1E3A8A, #1e4db5);
+      padding: 80px 0; text-align: center;
+      margin-top: 0;
+    }
+
+    .about-cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800;
+      color: #fff; margin-bottom: 14px;
+    }
+
+    .about-cta p {
+      font-family: 'DM Sans', sans-serif;
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem; margin-bottom: 32px;
+    }
+
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-white {
+      background: #fff; color: #1E3A8A;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; transition: all 0.2s;
+    }
+
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); color: #1E3A8A; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600; font-size: 0.95rem;
+      padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); color: #fff; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: #111827 !important;
+      padding: 28px 0;
+      height: auto !important;
+    }
+
+    .site-footer p { color: rgba(255,255,255,0.4); font-size: 0.85rem; text-align: center; }
+
+    @media (max-width: 768px) {
+      .about-what { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr 1fr; }
+      .dept-grid { grid-template-columns: 1fr 1fr; }
+      .about-hero h1 { font-size: 2rem; }
+    }
+
+    @media (max-width: 500px) {
+      .tech-grid, .dept-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="index.html" class="brand">Civic Complaint System</a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <div class="about-tag">About the Project</div>
+      <h1>AI-powered civic<br><span>complaint management</span></h1>
+      <p>A full-stack platform that uses machine learning to automatically classify citizen complaints and route them to the right government department.</p>
+    </div>
+  </section>
+
+  <!-- ── WHAT IS IT ── -->
+  <div class="about-what">
+    <div class="about-what-text">
+      <div class="section-tag">What is this?</div>
+      <h2>Explainable AI for Civic Complaint Classification</h2>
+      <p>This system allows citizens to submit complaints about civic issues — potholes, sanitation, water leaks, noise, and more. An AI model then reads the complaint and automatically assigns it to the correct city department.</p>
+      <p>Admins at each department can log in, view only their department's complaints, update statuses, and mark issues as resolved.</p>
+    </div>
+    <div class="about-what-cards">
+      <div class="mini-card">
+        <div class="mini-icon">🤖</div>
+        <div>
+          <h4>BERT-based Classification</h4>
+          <p>A fine-tuned sentence transformer model reads complaint descriptions and predicts the responsible department.</p>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon">📍</div>
+        <div>
+          <h4>Location-Aware Priority</h4>
+          <p>GPS coordinates are used with the Overpass API to measure area density and assign complaint priority scores.</p>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon">🛡️</div>
+        <div>
+          <h4>Role-Based Access</h4>
+          <p>Citizens, department admins, and superadmins each have tailored views and permissions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TECH STACK ── -->
+  <section class="tech-section">
+    <div class="tech-inner">
+      <div class="section-header">
+        <div class="section-tag">Tech Stack</div>
+        <h2>Built with modern technologies</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <span class="tech-emoji">🐍</span>
+          <h3>Flask + Python</h3>
+          <p>RESTful backend API handling authentication, complaint submission, and ML model inference.</p>
+        </div>
+        <div class="tech-card">
+          <span class="tech-emoji">🧠</span>
+          <h3>Sentence Transformers</h3>
+          <p>BERT-based model (all-MiniLM-L6-v2) encodes complaint text for department classification.</p>
+        </div>
+        <div class="tech-card">
+          <span class="tech-emoji">🗄️</span>
+          <h3>SQLite + SQLAlchemy</h3>
+          <p>Lightweight relational database storing users, complaints, images, and videos.</p>
+        </div>
+        <div class="tech-card">
+          <span class="tech-emoji">🌐</span>
+          <h3>Vanilla JS + HTML</h3>
+          <p>Pure frontend with no framework — fast, lightweight, and easy to deploy anywhere.</p>
+        </div>
+        <div class="tech-card">
+          <span class="tech-emoji">📊</span>
+          <h3>Scikit-learn</h3>
+          <p>TF-IDF + Logistic Regression pipeline for hybrid priority classification alongside rule-based matching.</p>
+        </div>
+        <div class="tech-card">
+          <span class="tech-emoji">📍</span>
+          <h3>Overpass API</h3>
+          <p>Counts points of interest near complaint locations to determine area density for priority scoring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEPARTMENTS ── -->
+  <section class="dept-section">
+    <div class="section-header">
+      <div class="section-tag">Coverage</div>
+      <h2>15 City Departments Supported</h2>
+    </div>
+    <div class="dept-grid">
+      <div class="dept-pill"><span class="dept-dot"></span>Department of Buildings</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Consumer & Worker Protection</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Department of Education</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Environmental Protection</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Health and Mental Hygiene</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Department of Homeless Services</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Housing Preservation & Dev.</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Parks and Recreation</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Department of Sanitation</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Department of Transportation</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Economic Development Corp.</div>
+      <div class="dept-pill"><span class="dept-dot"></span>NYC Police Department</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Office of Technology & Innovation</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Taxi and Limousine Commission</div>
+      <div class="dept-pill"><span class="dept-dot"></span>Superadmin (All Departments)</div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="about-cta">
+    <h2>Ready to file a complaint?</h2>
+    <p>Join the platform and get your civic issues heard and resolved.</p>
+    <div class="cta-btns">
+      <a href="citizen-signup.html" class="btn-white">Get Started →</a>
+      <a href="contact.html" class="btn-ghost">Contact Us</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Civic Complaint System. Built with AI for better governance.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

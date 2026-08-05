@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Civic Complaint System — Home</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
+    <script src="geo.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #F0F4F8;
+            color: #111827;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .site-header {
+            background: #1E3A8A;
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.3px;
+        }
+
+        .nav { display: flex; align-items: center; gap: 6px; }
+
+        .nav a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+        .nav .nav-cta {
+            background: #fff;
+            color: #1E3A8A !important;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .nav .nav-cta:hover { background: #EFF6FF; color: #1E3A8A; }
+
+        /* ── HERO ── */
+        .hero-section {
+            background: linear-gradient(135deg, #1E3A8A 0%, #1e4db5 50%, #1a56c4 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0 120px;
+        }
+
+        /* Geometric background shapes */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.06);
+            top: -200px;
+            right: -150px;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.06);
+            bottom: -100px;
+            left: 100px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #93C5FD;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            animation: fadeSlideDown 0.6s ease both;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #34D399;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.4); }
+        }
+
+        .hero-left h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            animation: fadeSlideDown 0.6s ease 0.1s both;
+        }
+
+        .hero-left h1 .accent { color: #93C5FD; }
+
+        .hero-left p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.75;
+            max-width: 480px;
+            margin-bottom: 40px;
+            animation: fadeSlideDown 0.6s ease 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            animation: fadeSlideDown 0.6s ease 0.3s both;
+        }
+
+        .btn-hero-primary {
+            background: #fff;
+            color: #1E3A8A;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            color: #1E3A8A;
+        }
+
+        .btn-hero-secondary {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.25);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ── Hero Stats ── */
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+            animation: fadeSlideDown 0.6s ease 0.4s both;
+        }
+
+        .stat-item { }
+
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.55);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Hero Right Card ── */
+        .hero-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 32px;
+            animation: fadeSlideUp 0.7s ease 0.3s both;
+        }
+
+        .hero-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #93C5FD;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .action-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .action-card:last-child { margin-bottom: 0; }
+
+        .action-card:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateX(4px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .action-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        .action-text strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .action-text span {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .action-arrow {
+            margin-left: auto;
+            color: rgba(255,255,255,0.4);
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+
+        .action-card:hover .action-arrow { transform: translateX(4px); color: rgba(255,255,255,0.8); }
+
+        /* ── WAVE DIVIDER ── */
+        .wave-divider {
+            display: block;
+            background: #1E3A8A;
+            line-height: 0;
+        }
+
+        .wave-divider svg { display: block; }
+
+        /* ── HOW IT WORKS ── */
+        .how-section {
+            background: #fff;
+            padding: 90px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #EFF6FF;
+            color: #1E3A8A;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.2;
+        }
+
+        .section-header p {
+            color: #6B7280;
+            font-size: 1rem;
+            margin-top: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Connector line */
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 44px;
+            left: calc(16.66% + 20px);
+            right: calc(16.66% + 20px);
+            height: 2px;
+            background: linear-gradient(90deg, #DBEAFE, #1E3A8A, #DBEAFE);
+            z-index: 0;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 40px 30px;
+            position: relative;
+            z-index: 1;
+            animation: fadeSlideUp 0.5s ease both;
+        }
+
+        .step-card:nth-child(1) { animation-delay: 0.1s; }
+        .step-card:nth-child(2) { animation-delay: 0.2s; }
+        .step-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .step-num {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #1E3A8A;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 4px 20px rgba(30,58,138,0.3);
+            position: relative;
+        }
+
+        .step-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            color: #6B7280;
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* ── FEATURES ── */
+        .features-section {
+            background: #F0F4F8;
+            padding: 90px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 36px 30px;
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1E3A8A, #3B82F6);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            border-color: #BFDBFE;
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-emoji {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #6B7280;
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        /* ── CTA SECTION ── */
+        .cta-section {
+            background: linear-gradient(135deg, #1E3A8A, #1e4db5);
+            padding: 90px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.07);
+            top: -200px;
+            left: -100px;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background: #111827;
+            padding: 48px 0 32px;
+        }
+
+        .footer-inner {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .footer-brand p {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand span {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: #fff; }
+
+        .footer-bottom {
+            width: 90%;
+            max-width: 1200px;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.85rem;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-card { display: none; }
+            .hero-left h1 { font-size: 2.4rem; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .steps-grid::before { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-section { padding: 60px 0 80px; }
+            .hero-left h1 { font-size: 2rem; }
+            .hero-stats { gap: 20px; }
+            .cta-section h2 { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── HEADER ── -->
+    <header class="site-header">
+        <div class="header-row">
+            <a href="index.html" class="brand">Civic Complaint System</a>
+            <nav class="nav">
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="citizen-login.html">Citizen Login</a>
+                <a href="admin-login.html" class="nav-cta">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero-section">
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    AI-Powered Civic Platform
+                </div>
+                <h1>Your voice.<br><span class="accent">Routed right.</span><br>Resolved fast.</h1>
+                <p>Submit civic complaints and let our machine learning model instantly route them to the correct government department — no guessing, no delays.</p>
+                <div class="hero-actions">
+                    <a href="citizen-signup.html" class="btn-hero-primary">📝 File a Complaint</a>
+                    <a href="about.html" class="btn-hero-secondary">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">15</div>
+                        <div class="stat-label">Departments</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">AI</div>
+                        <div class="stat-label">Classification</div>
+                    </div>
+        
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-card">
+                    <h3>Quick Access</h3>
+                    <a href="admin-login.html" class="action-card">
+                        <div class="action-icon">🛡️</div>
+                        <div class="action-text">
+                            <strong>Admin Dashboard</strong>
+                            <span>Manage & resolve complaints</span>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                    <a href="citizen-signup.html" class="action-card">
+                        <div class="action-icon">📋</div>
+                        <div class="action-text">
+                            <strong>Submit a Complaint</strong>
+                            <span>Report a civic issue now</span>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                    <a href="citizen-login.html" class="action-card">
+                        <div class="action-icon">🔍</div>
+                        <div class="action-text">
+                            <strong>Track My Complaints</strong>
+                            <span>Check status & updates</span>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="60">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0 Z" fill="#1E3A8A"/>
+        </svg>
+    </div>
+
+    <!-- ── HOW IT WORKS ── -->
+    <section class="how-section">
+        <div class="section-header">
+            <div class="section-tag">How It Works</div>
+            <h2>Three steps to resolution</h2>
+            <p>From submission to resolution — our AI handles the routing so you don't have to navigate government bureaucracy.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <h3>Submit Your Complaint</h3>
+                <p>Describe the issue, add your location, and attach photos or videos as evidence. Takes less than 2 minutes.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <h3>AI Classifies & Routes</h3>
+                <p>Our ML model instantly reads your complaint and assigns it to the correct city department with a priority score.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <h3>Track & Get Resolved</h3>
+                <p>Follow your complaint status from Registered → In Progress → Resolved directly from your dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section class="features-section">
+        <div class="section-header">
+            <div class="section-tag">Features</div>
+            <h2>Everything you need</h2>
+            <p>A complete platform for citizens and administrators to manage civic complaints efficiently.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-emoji">🤖</span>
+                <h3>ML Classification</h3>
+                <p>BERT-powered model auto-assigns every complaint to the right department with high accuracy — no manual sorting needed.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-emoji">📍</span>
+                <h3>Location-Aware Priority</h3>
+                <p>GPS coordinates combined with area density scoring ensures high-impact complaints are flagged as top priority.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-emoji">📷</span>
+                <h3>Photo & Video Evidence</h3>
+                <p>Attach up to 5 photos and 3 videos directly to your complaint so admins get the full picture immediately.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-emoji">🛡️</span>
+                <h3>Role-Based Access</h3>
+                <p>Citizens, department admins, and superadmins each see exactly what they need — nothing more, nothing less.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-emoji">📊</span>
+                <h3>Real-Time Dashboard</h3>
+                <p>Admins can sort, filter, and update complaint statuses in real time with a clean, scrollable dashboard.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-emoji">⚡</span>
+                <h3>Instant Status Tracking</h3>
+                <p>Citizens get live updates as their complaint moves from Registered to In Progress to Resolved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <h2>Ready to make your city better?</h2>
+            <p>Join thousands of citizens using the Civic Complaint System to report issues and hold city departments accountable.</p>
+            <div class="cta-buttons">
+                <a href="citizen-signup.html" class="btn-hero-primary">Get Started Free →</a>
+                <a href="contact.html" class="btn-hero-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <p>Civic Complaint System</p>
+                <span>An AI-powered platform connecting citizens to city departments for faster resolution of civic issues.</span>
+            </div>
+            <div class="footer-col">
+                <h4>Citizens</h4>
+                <a href="citizen-signup.html">Sign Up</a>
+                <a href="citizen-login.html">Login</a>
+                <a href="new-complaint.html">Submit Complaint</a>
+                <a href="citizen-dashboard.html">My Complaints</a>
+            </div>
+            <div class="footer-col">
+                <h4>Platform</h4>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="admin-login.html">Admin Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Civic Complaint System. All rights reserved.</p>
+            <p>Built with AI for better governance.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

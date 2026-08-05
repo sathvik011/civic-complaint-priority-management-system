@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Complaints</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="app.js" defer></script>
+  <script src="geo.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #1e4db5 100%);
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .site-header {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .site-header .brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    .site-header .nav a {
+      color: rgba(255,255,255,0.85);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .site-header .nav a:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    /* ── Page Wrapper ── */
+    .page-wrapper {
+      width: 92%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 0 60px;
+    }
+
+    /* ── Welcome Banner ── */
+    .welcome-banner {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(8px);
+    }
+
+    .welcome-banner h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 6px;
+    }
+
+    .welcome-banner p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .new-complaint-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #1E3A8A;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 13px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .new-complaint-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      color: #1E3A8A;
+    }
+
+    /* ── Controls Card ── */
+    .controls-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .ctrl-group label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #93C5FD;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .ctrl-group select,
+    .ctrl-group input {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .ctrl-group select:focus,
+    .ctrl-group input:focus {
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .ctrl-group select option {
+      background: #1E3A8A;
+      color: #fff;
+    }
+
+    .ctrl-group input::placeholder {
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── Table Card ── */
+    .table-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    table th {
+      background: rgba(255,255,255,0.08);
+      color: #93C5FD;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      white-space: nowrap;
+    }
+
+    table td {
+      padding: 16px 20px;
+      color: rgba(255,255,255,0.85);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      vertical-align: middle;
+    }
+
+    table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table tr {
+      transition: background 0.2s;
+    }
+
+    table tr:hover td {
+      background: rgba(255,255,255,0.06); color: #1E3A8A;
+    }
+
+    /* ── Status Badges ── */
+    .status {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .status-registered  { background: rgba(245,158,11,0.25); color: #FCD34D; border: 1px solid rgba(245,158,11,0.4); }
+    .status-in-progress { background: rgba(59,130,246,0.25);  color: #93C5FD; border: 1px solid rgba(59,130,246,0.4); }
+    .status-resolved    { background: rgba(16,185,129,0.25);  color: #6EE7B7; border: 1px solid rgba(16,185,129,0.4); }
+
+    /* ── Action Button ── */
+    .btn-view {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-view:hover {
+      background: rgba(255,255,255,0.28);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .empty-state .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: block;
+      opacity: 0.6;
+    }
+
+    .empty-state p {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .empty-state span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Desc truncate ── */
+    .desc-cell {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 768px) {
+      .welcome-banner { flex-direction: column; align-items: flex-start; }
+      .controls-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="index.html" class="brand">Civic Complaint System</a>
+      <nav class="nav">
+        <a href="new-complaint.html">+ New Complaint</a>
+        <a href="index.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div>
+        <h2>My Complaints</h2>
+        <p>Track the status of your submitted civic complaints in real-time.</p>
+      </div>
+      <a href="new-complaint.html" class="new-complaint-btn">
+        <span>+</span> New Complaint
+      </a>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-card">
+      <div class="ctrl-group">
+        <label for="sortOption">Sort by</label>
+        <select id="sortOption">
+          <option value="date">Date</option>
+          <option value="location">Location</option>
+          <option value="department">Department</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label for="filterStatus">Filter by Status</label>
+        <select id="filterStatus">
+          <option value="all">All</option>
+          <option value="Registered">Registered</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label for="searchBox">Search</label>
+        <input type="text" id="searchBox" placeholder="Search complaints..." />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-scroll">
+        <table id="complaintsTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Location</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
